@@ -1,0 +1,32 @@
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(301px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;  
+}
+
+@media screen and (max-width: 1150px) {
+  .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100vw / 4), 1fr));
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card-list {
+    gap: 8px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .card-list {
+    grid-template-columns: 1fr;
+  }
+}

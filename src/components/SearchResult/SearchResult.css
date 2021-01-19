@@ -1,0 +1,43 @@
+.search-result {
+  background-color: #F5F6F7;
+  padding: 80px 104px;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+.search-result__title {
+  font-family: Robotoslab, 'Times New Roman', Times, serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1A1B22;
+  margin: 0 0 64px;
+  padding: 0;
+}
+
+.search-result__btn {
+  min-width: 288px;
+  margin: 64px auto 0;
+}
+
+@media screen and (max-width: 1150px) {
+  .search-result {
+    padding: 40px;
+  }
+
+  .search-result__title {
+    margin-bottom: 32px;
+    font-size: 30px;
+    line-height: 34px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .search-result {
+    padding: 32px 16px;
+  }
+}
