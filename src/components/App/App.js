@@ -29,6 +29,8 @@ function App() {
     }
   }, [location.pathname]);
 
+  
+
   const handleHamburgerClick = () => {
     setNavigationIsExpanded(!navigationIsExpanded);
     setHamburgerBtnIsPressed(!navigationIsExpanded)

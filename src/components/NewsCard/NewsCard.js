@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './NewsCard.css';
 import testImage from '../../images/temp/news.jpg';
 
-const NewsCard = (props) => {
+const NewsCard = ({ newsCard }) => {
   const location = useLocation();
 
   const [bookmarkButtonIsClicked, setBookmarkButtonIsClicked] = useState(false);
@@ -17,6 +17,14 @@ const NewsCard = (props) => {
 
   const bookmarkTooltipClassName = `card__widget card__widget_content_text ${bookmarkButtonIsClicked && 'card__widget_visible'}`
   const trashTooltipClassName = `card__widget card__widget_content_text ${trashButtonIsHovered && 'card__widget_visible'}`
+
+  const dateFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }
+  const cardDate = new Date(Date.parse(newsCard.publishedAt)).toLocaleString('ru', dateFormatOptions);
+
 
   return (
     <li className="card">
@@ -44,15 +52,20 @@ const NewsCard = (props) => {
 
       <img
         className="card__image"
-        src={testImage}
-        alt="картинка новости" />
-      <a href="/" className="card__bottom-container">
-        <header className="card__header">2 августа, 2019</header>
+        src={newsCard.urlToImage}
+        alt={`Изображение к новости "${newsCard.title}"`} />
+      <a
+        href={newsCard.url}
+        className="card__bottom-container"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <header className="card__header">{cardDate}</header>
         <article className="card__article">
-          <h3 className="card__title">«Первозданная тайга»: новый фотопроект Игоря Шпиленка</h3>
-          <p className="card__text">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.</p>
+          <h3 className="card__title">{newsCard.title}</h3>
+          <p className="card__text">{newsCard.description}</p>
         </article>
-        <footer className="card__footer">Медуза</footer>
+        <footer className="card__footer">{newsCard.source.name}</footer>
       </a>
     </li>
   );

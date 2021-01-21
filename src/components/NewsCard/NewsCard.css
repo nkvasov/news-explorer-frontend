@@ -99,7 +99,7 @@
 }
 
 .card__image {
-  display: block;
+  /* display: block; */
   width: 100%;
   height: 272px;
   object-fit: cover;
@@ -131,14 +131,14 @@
   overflow: hidden;
 }
 
-.card__article::after {
+/* .card__article::after {
   content: '';
   position: absolute;
   right: 0; bottom: 0;
   width: 100%;
   height: 20%;
   background: linear-gradient(to bottom, rgba(255,255,255, 0.0), #fff 100%);
-}
+} */
 
 .card__title {
   font-family: 'Robotoslab', 'Times New Roman', Times, serif;
