@@ -1,0 +1,127 @@
+.search {
+  background-image: url(../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  color: white;
+  padding: 160px 0 80px;
+}
+
+.search__container {
+  max-width: 608px;
+  margin: 0 auto;
+}
+
+.search__title {
+  margin: 0 0 32px 0;
+  font-family: Robotoslab, 'Times New Roman', Times, serif;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 64px;
+}
+
+.search__subtitle {
+  margin: 0 0 64px;
+  font-family: Roboto, Arial, Helvetica, sans-serif serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  width: 90%;
+}
+
+.search__form {
+  display: flex;
+  margin: 0;
+}
+
+.search__input {
+  height: 64px;
+  flex-grow: 2;
+  box-sizing: border-box;
+  border: 1px solid #d1d2d6;
+  border-radius: 32px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 0 184px 0 32px;
+  color: #1A1B22;
+  caret-color: #2F71E5;
+}
+
+input::placeholder {
+  color: #B6BCBF;
+}
+
+.search__input:focus {
+  /* outline: none; */
+}
+
+.search__btn {
+  margin-left: -168px;
+  width: 168px;
+}
+
+@media screen and (max-width: 1150px) {
+  .search {
+    padding-top: 104px;
+    padding-bottom: 48px;
+  }
+
+  .search__container {
+    max-width: 452px;
+  }
+
+  .search__title {
+    margin-bottom: 16px;
+    font-size: 36px;
+    line-height: 40px;
+  }
+  
+  .search__subtitle {
+    margin-bottom: 48px;
+  }
+
+  .search__input {
+    height: 56px;
+    border-radius: 28px;
+    padding-left: 28px;
+    padding-right: 170px;
+  }
+
+  .search__btn {
+    height: 56px;
+    margin-left: -160px;
+    width: 160px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .search {
+    padding: 86px 40px 32px;
+  }
+  
+  .search__subtitle {
+    margin-bottom: 122px;
+  }
+
+  .search__form {
+    flex-direction: column;
+  }
+  
+  .search__input {
+    margin-bottom: 16px;
+  }
+
+  .search__btn {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .search {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
