@@ -19,6 +19,30 @@
   padding: 0;
 }
 
+.search-result__title_type_centred-small {
+  font-size: 26px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.search-result__image {
+  display: block;
+  margin: 0 auto 24px;
+}
+
+.search-result__text {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #B6BCBF;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 320px;
+}
+
 .search-result__btn {
   min-width: 288px;
   margin: 64px auto 0;

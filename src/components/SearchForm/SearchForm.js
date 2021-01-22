@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { newsApi } from '../../utils/NewsApi';
+// import { newsApi } from '../../utils/NewsApi';
 import './SearchForm.css';
 
 const SearchForm = ({ handleNewsSearch }) => {
 
-  const [query, setQuery] = useState('');
+  const [queryString, setQueryString] = useState('');
 
   const handleQueryInputChange = (e) => {
-    setQuery(e.target.value);
+    setQueryString(e.target.value);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleNewsSearch(query);
+    handleNewsSearch(queryString);
   }
 
   return (
@@ -28,7 +28,7 @@ const SearchForm = ({ handleNewsSearch }) => {
             required
             minLength="2"
             maxLength="100"
-            value={query}
+            value={queryString}
             onChange={handleQueryInputChange}
           />
           <button className="btn btn_type_submit search__btn"
