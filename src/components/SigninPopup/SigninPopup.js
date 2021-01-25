@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
 const SigninPopup = ({
@@ -9,8 +9,38 @@ const SigninPopup = ({
   onAlternativeLinkClick,
   onClose,
   onEscPress,
-  themeLight
+  themeLight,
+  handleLogin
 }) => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // const history = useHistory();
+
+  const handleEmailInputChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordInputChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!password || !email) {
+      // handleError();
+      return;
+    }
+    handleLogin(password, email)
+      .then(() => {
+        setEmail('');
+        setPassword('');
+        // history.push('/');
+      })
+      .catch((err) => {
+        // handleError(err);
+      });
+  };
 
   return (
     <PopupWithForm
@@ -22,6 +52,7 @@ const SigninPopup = ({
       onClose={onClose}
       onEscPress={onEscPress}
       themeLight={themeLight}
+      onSubmit={handleSubmit}
     >
       <div className="popup__field">
         <label className="popup__input-title">Email</label>
@@ -33,8 +64,8 @@ const SigninPopup = ({
           required
           minLength="3"
           maxLength="40"
-        // value={email}
-        // onChange={handleEmailInputChange}
+          value={email}
+          onChange={handleEmailInputChange}
         />
         <span className="popup__input-error popup__input-error_active">ошибка</span>
 
@@ -49,8 +80,8 @@ const SigninPopup = ({
           required
           minLength="5"
           maxLength="20"
-        // value={password}
-        // onChange={handlePasswordInputChange}
+          value={password}
+          onChange={handlePasswordInputChange}
         />
         <span className="popup__input-error popup__input-error_active">ошибка</span>
         <span className="popup__form-error popup__form-error_active">ошибка</span>

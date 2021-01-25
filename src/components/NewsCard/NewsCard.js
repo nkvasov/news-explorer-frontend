@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCard.css';
-import testImage from '../../images/temp/news.jpg';
+// import testImage from '../../images/temp/news.jpg';
 
-const NewsCard = ({ newsCard }) => {
+const NewsCard = ({
+  newsCard,
+  handleNewsSave,
+  handleNewsDelete
+}) => {
   const location = useLocation();
 
   const [bookmarkButtonIsClicked, setBookmarkButtonIsClicked] = useState(false);
@@ -23,7 +27,7 @@ const NewsCard = ({ newsCard }) => {
     month: 'long',
     year: 'numeric'
   }
-  const cardDate = new Date(Date.parse(newsCard.publishedAt)).toLocaleString('ru', dateFormatOptions);
+  const cardDate = new Date(Date.parse(newsCard.date)).toLocaleString('ru', dateFormatOptions);
 
 
   return (
@@ -31,18 +35,22 @@ const NewsCard = ({ newsCard }) => {
 
       <div className="card__widgets-container">
 
-        <div className={keyClassName}><span>ключевое слово</span></div>
+        <div className={keyClassName}><span>{newsCard.keyword}</span></div>
         <div className="card__widgets-wrapper">
           <div
             className={trashClassName}
             onMouseEnter={() => setTrashButtonIsHovered(true)}
             onMouseLeave={() => setTrashButtonIsHovered(false)}
+            onClick={() => {
+              handleNewsDelete(newsCard);
+            }}
           />
           <div
             className={bookmarkClassName}
             onClick={() => {
               setBookmarkButtonIsClicked(!bookmarkButtonIsClicked);
               setTimeout(setBookmarkButtonIsClicked, 1200, false);
+              handleNewsSave(newsCard);
             }}
           />
           <div className={bookmarkTooltipClassName}><span>Войдите, чтобы сохранять статьи</span></div>
@@ -52,7 +60,7 @@ const NewsCard = ({ newsCard }) => {
 
       <img
         className="card__image"
-        src={newsCard.urlToImage}
+        src={newsCard.image}
         alt={`Изображение к новости "${newsCard.title}"`} />
       <a
         href={newsCard.url}
@@ -63,9 +71,9 @@ const NewsCard = ({ newsCard }) => {
         <header className="card__header">{cardDate}</header>
         <article className="card__article">
           <h3 className="card__title">{newsCard.title}</h3>
-          <p className="card__text">{newsCard.description}</p>
+          <p className="card__text">{newsCard.text}</p>
         </article>
-        <footer className="card__footer">{newsCard.source.name}</footer>
+        <footer className="card__footer">{newsCard.source}</footer>
       </a>
     </li>
   );

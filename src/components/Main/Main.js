@@ -8,11 +8,12 @@ import SearchError from '../SearchError/SearchError';
 import { newsApi } from '../../utils/NewsApi';
 import './Main.css';
 
-const Main = () => {
+const Main = ({ handleNewsSave }) => {
   const [newsCards, setNewsCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cardsQuantity, setCardsQuantity] = useState(3);
   const [isSearchError, setIsSearchError] = useState(false);
+  // const [keyword, setKeyword] = useState('');
 
 
   const handleShowMoreCardsClick = () => {
@@ -38,6 +39,7 @@ const Main = () => {
           setNewsCards([]);
         } else {
           localStorage.setItem('searched-items', JSON.stringify(res.articles));
+          localStorage.setItem('keyword', queryString);
           const storageData = JSON.parse(localStorage.getItem('searched-items'));
           setNewsCards(storageData);
           setCardsQuantity(3);
@@ -60,6 +62,8 @@ const Main = () => {
           newsCards={newsCards}
           cardsQuantity={cardsQuantity}
           handleShowMoreCardsClick={handleShowMoreCardsClick}
+          handleNewsSave={handleNewsSave}
+          // keyword={keyword}
         />
       )}
       <About />

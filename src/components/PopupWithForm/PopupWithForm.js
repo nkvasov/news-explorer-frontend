@@ -10,6 +10,7 @@ const PopupWithForm = ({
   onEscPress,
   isOpen,
   onClose,
+  onSubmit,
   themeLight,
   children,
 }) => {
@@ -35,6 +36,7 @@ const PopupWithForm = ({
         name={name}
         onClick={(e) => e.stopPropagation()}
         noValidate
+        onSubmit={onSubmit}
       >
         <h2 className="popup__title">{title}</h2>
         <button

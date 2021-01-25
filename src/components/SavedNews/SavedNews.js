@@ -3,12 +3,15 @@ import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import './SavedNews.css';
 
-const SavedNews = (props) => {
+const SavedNews = ({ newsCards, handleNewsDelete }) => {
   return (
     <main>
       <SavedNewsHeader />
       <section className="saved-news">
-        <NewsCardList />
+        <NewsCardList
+          newsCards={newsCards}
+          handleNewsDelete={handleNewsDelete}
+        />
       </section>
     </main>
   );
