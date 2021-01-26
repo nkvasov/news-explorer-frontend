@@ -12,6 +12,7 @@ import SavedNews from '../SavedNews/SavedNews';
 import SigninPopup from '../SigninPopup/SigninPopup';
 import SignupPopup from '../SignupPopup/SignupPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import { newsApi } from '../../utils/NewsApi';
 import * as auth from '../../utils/NewsExplorerAuth';
 import * as mainApi from '../../utils/MainApi';
 
@@ -25,7 +26,8 @@ function App() {
   const [themeLight, setThemeLight] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userNews, setUserNews] = useState([]);
+  const [savedNews, setSavedNews] = useState([]);
+  // const [foundNews, setFoundNews] = useState([]);
 
   const location = useLocation();
 
@@ -46,6 +48,13 @@ function App() {
     }
   }
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('searched-items')) {
+  //     const storageData = JSON.parse(localStorage.getItem('searched-items'));
+  //     setFoundNews(storageData);
+  //   }
+  // }, []);
+
   useEffect(() => {
     tokenCheck();
   }, []);
@@ -53,9 +62,9 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       const jwt = localStorage.getItem('jwt');
-      mainApi.getUserNews(jwt)
+      mainApi.getSavedNews(jwt)
         .then((articles) => {
-          setUserNews(articles);
+          setSavedNews(articles.reverse());
         })
         .catch((err) => {
           console.log(err);
@@ -71,7 +80,21 @@ function App() {
     }
   }, [location.pathname]);
 
-
+  // const handleNewsSearch = (queryString) => {
+  //   return newsApi(queryString)
+  //     .then((res) => {
+  //       if (res.articles.length === 0) {
+  //         localStorage.removeItem('searched-items');
+  //         setFoundNews([]);
+  //       } else {
+  //         localStorage.setItem('searched-items', JSON.stringify(res.articles));
+  //         localStorage.setItem('keyword', queryString);
+  //         const storageData = JSON.parse(localStorage.getItem('searched-items'));
+  //         setFoundNews(storageData);
+  //         // setCardsQuantity(3);
+  //       }
+  //     });
+  // };
 
   const handleHamburgerClick = () => {
     setNavigationIsExpanded(!navigationIsExpanded);
@@ -137,23 +160,28 @@ function App() {
     setLoggedIn(false);
   }
 
+  // function checkNewsIsSaved(someNews) {
+  //   return savedNews.some((news) => news.link === someNews.link);
+  // }
 
   function handleNewsSave(newsCard) {
     const jwt = localStorage.getItem('jwt');
-    mainApi.saveNews(jwt, newsCard);
+    return mainApi.saveNews(jwt, newsCard)
+      .then((res) => {
+        const userNewsUpdated = savedNews.slice();
+        userNewsUpdated.unshift(res);
+        setSavedNews(userNewsUpdated);
+      })
   }
 
   function handleNewsDelete(newsCard) {
     const jwt = localStorage.getItem('jwt');
-    mainApi.deleteNews(jwt, newsCard._id)
+    return mainApi.deleteNews(jwt, newsCard._id)
       .then((res) => {
-        const deletedNewsIndex = userNews.findIndex((c) => c._id === res._id);
-        const userNewsUpdated = userNews.slice();
+        const deletedNewsIndex = savedNews.findIndex((c) => c._id === res._id);
+        const userNewsUpdated = savedNews.slice();
         userNewsUpdated.splice(deletedNewsIndex, 1);
-        setUserNews(userNewsUpdated);
-      })
-      .catch((err) => {
-        console.log(err);
+        setSavedNews(userNewsUpdated);
       });
   }
   // function handleAuthError(err = { message: 'Что-то пошло не так. Попробуйте еще раз.' }) {
@@ -192,13 +220,19 @@ function App() {
         </Header>
         <Switch>
           <Route exact path='/'>
-            <Main handleNewsSave={handleNewsSave} handleNewsDelete={handleNewsDelete} />
+            <Main
+              handleNewsSave={handleNewsSave}
+              handleNewsDelete={handleNewsDelete}
+              // checkNewsIsSaved={checkNewsIsSaved}
+              savedNews={savedNews}
+              loggedIn={loggedIn}
+            />
           </Route>
           <ProtectedRoute
             exact path='/saved-news'
             loggedIn={loggedIn}
             component={SavedNews}
-            newsCards={userNews}
+            newsCards={savedNews}
             handleNewsDelete={handleNewsDelete}
           />
         </Switch>
@@ -230,7 +264,7 @@ function App() {
 
 
         {/* <Route path='/saved-news'>
-          <SavedNews newsCards={userNews} />
+          <SavedNews newsCards={savedNews} />
         </Route> */}
 
         <Footer />

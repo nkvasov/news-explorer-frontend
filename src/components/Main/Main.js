@@ -8,7 +8,7 @@ import SearchError from '../SearchError/SearchError';
 import { newsApi } from '../../utils/NewsApi';
 import './Main.css';
 
-const Main = ({ handleNewsSave }) => {
+const Main = ({ handleNewsSave, savedNews, loggedIn, handleNewsDelete }) => {
   const [newsCards, setNewsCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cardsQuantity, setCardsQuantity] = useState(3);
@@ -63,7 +63,10 @@ const Main = ({ handleNewsSave }) => {
           cardsQuantity={cardsQuantity}
           handleShowMoreCardsClick={handleShowMoreCardsClick}
           handleNewsSave={handleNewsSave}
-          // keyword={keyword}
+          loggedIn={loggedIn}
+          // checkNewsIsSaved={checkNewsIsSaved}
+          handleNewsDelete={handleNewsDelete}
+          savedNews={savedNews}
         />
       )}
       <About />

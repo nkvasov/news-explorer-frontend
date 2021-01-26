@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCard.css';
 // import testImage from '../../images/temp/news.jpg';
@@ -6,21 +6,39 @@ import './NewsCard.css';
 const NewsCard = ({
   newsCard,
   handleNewsSave,
-  handleNewsDelete
+  handleNewsDelete,
+  loggedIn,
+  savedNews
 }) => {
   const location = useLocation();
 
-  const [bookmarkButtonIsClicked, setBookmarkButtonIsClicked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [bookmarkButtonIsHovered, setBookmarkButtonIsHovered] = useState(false);
   const [trashButtonIsHovered, setTrashButtonIsHovered] = useState(false);
 
-  const bookmarkClassName = `card__widget card__widget_content_icon card__widget_icon_bookmark ${(location.pathname !== '/saved-news') && 'card__widget_visible'}`
+  function checkNewsIsSaved(someNews) {
+    // return savedNews.some((news) => news.link === someNews.link);
+    const res = savedNews.find((news) => news.link === someNews.link);
+    if (res) {
+      newsCard._id = res._id;
+      setIsSaved(true);
+    }
+  }
 
-  const trashClassName = `card__widget card__widget_content_icon card__widget_icon_trash ${(location.pathname === '/saved-news') && 'card__widget_visible'}`
+  useEffect(() => {
+    if (loggedIn) {
+      checkNewsIsSaved(newsCard);
+    }
+  }, [loggedIn, savedNews]);
 
-  const keyClassName = `card__widget card__widget_content_text card__widget_key-feature ${(location.pathname === '/saved-news') && 'card__widget_visible'}`
+  const bookmarkClassName = `card__widget card__widget_content_icon card__widget_icon_bookmark ${(location.pathname !== '/saved-news') && 'card__widget_visible'} ${isSaved && 'card__widget_icon_bookmark-marked'}`;
 
-  const bookmarkTooltipClassName = `card__widget card__widget_content_text ${bookmarkButtonIsClicked && 'card__widget_visible'}`
-  const trashTooltipClassName = `card__widget card__widget_content_text ${trashButtonIsHovered && 'card__widget_visible'}`
+  const trashClassName = `card__widget card__widget_content_icon card__widget_icon_trash ${(location.pathname === '/saved-news') && 'card__widget_visible'}`;
+
+  const keyClassName = `card__widget card__widget_content_text card__widget_key-feature ${(location.pathname === '/saved-news') && 'card__widget_visible'}`;
+
+  const bookmarkTooltipClassName = `card__widget card__widget_content_text ${!loggedIn && bookmarkButtonIsHovered && 'card__widget_visible'}`;
+  const trashTooltipClassName = `card__widget card__widget_content_text ${trashButtonIsHovered && 'card__widget_visible'}`;
 
   const dateFormatOptions = {
     day: 'numeric',
@@ -29,6 +47,28 @@ const NewsCard = ({
   }
   const cardDate = new Date(Date.parse(newsCard.date)).toLocaleString('ru', dateFormatOptions);
 
+  const onBookmarkClick = () => {
+    if (isSaved) {
+      handleNewsDelete(newsCard)
+        .then(() => {
+          setIsSaved(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          //  что здесь делать с ошибкой???
+        });
+    } else {
+      handleNewsSave(newsCard)
+        .then(() => {
+          newsCard._id = savedNews[0]._id;
+          setIsSaved(true)
+        })
+        .catch((err) => {
+          console.log(err);
+          //  что здесь делать с ошибкой???
+        });
+    }
+  }
 
   return (
     <li className="card">
@@ -42,16 +82,18 @@ const NewsCard = ({
             onMouseEnter={() => setTrashButtonIsHovered(true)}
             onMouseLeave={() => setTrashButtonIsHovered(false)}
             onClick={() => {
-              handleNewsDelete(newsCard);
+              handleNewsDelete(newsCard)
+                .catch((err) => {
+                  console.log(err);
+                  //  что здесь делать с ошибкой???
+                });
             }}
           />
           <div
             className={bookmarkClassName}
-            onClick={() => {
-              setBookmarkButtonIsClicked(!bookmarkButtonIsClicked);
-              setTimeout(setBookmarkButtonIsClicked, 1200, false);
-              handleNewsSave(newsCard);
-            }}
+            onClick={onBookmarkClick}
+            onMouseEnter={() => setBookmarkButtonIsHovered(true)}
+            onMouseLeave={() => setBookmarkButtonIsHovered(false)}
           />
           <div className={bookmarkTooltipClassName}><span>Войдите, чтобы сохранять статьи</span></div>
           <div className={trashTooltipClassName}><span>Убрать из сохранённых</span></div>

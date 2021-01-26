@@ -7,7 +7,7 @@ const handleOriginalResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export const getUserNews = (token) => {
+export const getSavedNews = (token) => {
   return fetch(`${BASE_URL}/articles`, {
     method: 'GET',
     headers: {

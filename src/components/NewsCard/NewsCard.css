@@ -94,9 +94,17 @@
   background-image: url(../../images/icons/bookmark-hover.svg);
 }
 
+.card__widget_icon_bookmark:active {
+  background-color: #dddddd;
+}
+
 .card__widget_icon_bookmark-marked {
   background-image: url(../../images/icons/bookmark-marked.svg);
 }
+
+/* .card__widget_icon_bookmark-marked:hover {
+  opacity: 0.7;
+} */
 
 .card__image {
   /* display: block; */
