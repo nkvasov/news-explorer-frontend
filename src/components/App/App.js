@@ -11,6 +11,7 @@ import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import SigninPopup from '../SigninPopup/SigninPopup';
 import SignupPopup from '../SignupPopup/SignupPopup';
+import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 // import { newsApi } from '../../utils/NewsApi';
 import * as auth from '../../utils/NewsExplorerAuth';
@@ -22,6 +23,7 @@ function App() {
   const [navigationIsExpanded, setNavigationIsExpanded] = useState(false);
   const [signinPopupIsOpened, setSigninPopupisOpened] = useState(false);
   const [signupPopupIsOpened, setSignupPopupisOpened] = useState(false);
+  const [confirmationPopupIsOpened, setConfirmationPopupIsOpened] = useState(false);
   const [hamburgerBtnIsPressed, setHamburgerBtnIsPressed] = useState(false);
   const [themeLight, setThemeLight] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -102,6 +104,9 @@ function App() {
   }
 
   const handleSigninClick = () => {
+    if (somePopupIsOpened) {
+      closeAllPopups();
+    }
     setSigninPopupisOpened(true);
     setSomePopupIsOpened(true);
     if (navigationIsExpanded) {
@@ -111,6 +116,9 @@ function App() {
   };
 
   const handleSignupClick = () => {
+    if (somePopupIsOpened) {
+      closeAllPopups();
+    }
     setSignupPopupisOpened(true);
     setSomePopupIsOpened(true);
     if (navigationIsExpanded) {
@@ -125,11 +133,22 @@ function App() {
     setHamburgerBtnIsPressed(false);
   }
 
+  const handleRegistrationSuccess = () => {
+    if (somePopupIsOpened) {
+      closeAllPopups();
+    }
+    setSomePopupIsOpened(true);
+    setConfirmationPopupIsOpened(true);
+
+  }
+
   const closeAllPopups = () => {
     if (signinPopupIsOpened) {
       setSigninPopupisOpened(false);
     } else if (signupPopupIsOpened) {
       setSignupPopupisOpened(false);
+    } else if (confirmationPopupIsOpened) {
+      setConfirmationPopupIsOpened(false);
     }
 
     setSomePopupIsOpened(false);
@@ -151,7 +170,7 @@ function App() {
   }
 
   function signUp(password, email, name) {
-    return auth.register(password, email);
+    return auth.register(password, email, name);
   }
 
   function signOut() {
@@ -258,6 +277,17 @@ function App() {
           alternativeLinkText="Войти"
           onClose={closeAllPopups}
           onEscPress={handleEscPress}
+          themeLight={themeLight}
+          handleRegistration={signUp}
+          handleRegistrationSuccess={handleRegistrationSuccess}
+        />
+
+        <ConfirmationPopup
+          isOpen={confirmationPopupIsOpened}
+          title='Пользователь успешно зарегистрирован!'
+          onLinkClick={handleSigninClick}
+          onEscPress={handleEscPress}
+          onClose={closeAllPopups}
           themeLight={themeLight}
         />
 

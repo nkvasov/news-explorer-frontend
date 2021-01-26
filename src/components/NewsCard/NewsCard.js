@@ -105,7 +105,7 @@ const NewsCard = ({
         src={newsCard.image}
         alt={`Изображение к новости "${newsCard.title}"`} />
       <a
-        href={newsCard.url}
+        href={newsCard.link}
         className="card__bottom-container"
         target="_blank"
         rel="noreferrer"
