@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCard.css';
-// import testImage from '../../images/temp/news.jpg';
 
 const NewsCard = ({
   newsCard,
@@ -17,7 +16,6 @@ const NewsCard = ({
   const [trashButtonIsHovered, setTrashButtonIsHovered] = useState(false);
 
   function checkNewsIsSaved(someNews) {
-    // return savedNews.some((news) => news.link === someNews.link);
     const res = savedNews.find((news) => news.link === someNews.link);
     if (res) {
       newsCard._id = res._id;
@@ -27,6 +25,7 @@ const NewsCard = ({
 
   useEffect(() => {
     if (loggedIn) {
+      console.log('fire');
       checkNewsIsSaved(newsCard);
     }
   }, [loggedIn, savedNews]);
@@ -55,7 +54,6 @@ const NewsCard = ({
         })
         .catch((err) => {
           console.log(err);
-          //  что здесь делать с ошибкой???
         });
     } else {
       handleNewsSave(newsCard)
@@ -65,7 +63,6 @@ const NewsCard = ({
         })
         .catch((err) => {
           console.log(err);
-          //  что здесь делать с ошибкой???
         });
     }
   }
@@ -81,13 +78,7 @@ const NewsCard = ({
             className={trashClassName}
             onMouseEnter={() => setTrashButtonIsHovered(true)}
             onMouseLeave={() => setTrashButtonIsHovered(false)}
-            onClick={() => {
-              handleNewsDelete(newsCard)
-                .catch((err) => {
-                  console.log(err);
-                  //  что здесь делать с ошибкой???
-                });
-            }}
+            onClick={() => handleNewsDelete(newsCard)}
           />
           <div
             className={bookmarkClassName}

@@ -20,9 +20,6 @@ const NewsCardList = ({
           handleNewsDelete={handleNewsDelete}
           loggedIn={loggedIn}
           savedNews={savedNews}
-        // onCardClick={onCardClick}
-        // onCardLike={onCardLike}
-        // onCardDelete={onCardDelete}
         />
       ))}
     </ul>

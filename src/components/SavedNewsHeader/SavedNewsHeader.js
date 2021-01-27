@@ -12,7 +12,6 @@ const SavedNewsHeader = ({ name, cardsQuantity, keywordsRaiting }) => {
     fourthKey = (keywordsRaiting.length > 3) ? ` и ${keywordsRaiting.length - 2} другим` : '';
   }
 
-
   return (
     <section className="saved-news-header">
       <h2 className="saved-news-header__title">Сохранённые статьи</h2>

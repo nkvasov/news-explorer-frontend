@@ -13,8 +13,6 @@ const Main = ({ handleNewsSave, savedNews, loggedIn, handleNewsDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [cardsQuantity, setCardsQuantity] = useState(3);
   const [isSearchError, setIsSearchError] = useState(false);
-  // const [keyword, setKeyword] = useState('');
-
 
   const handleShowMoreCardsClick = () => {
     setCardsQuantity(cardsQuantity + 3);
@@ -64,7 +62,6 @@ const Main = ({ handleNewsSave, savedNews, loggedIn, handleNewsDelete }) => {
           handleShowMoreCardsClick={handleShowMoreCardsClick}
           handleNewsSave={handleNewsSave}
           loggedIn={loggedIn}
-          // checkNewsIsSaved={checkNewsIsSaved}
           handleNewsDelete={handleNewsDelete}
           savedNews={savedNews}
         />

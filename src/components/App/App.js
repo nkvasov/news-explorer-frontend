@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, useLocation, Switch, Redirect } from 'react-router-dom';
+import { Route, useLocation, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import './App.css';
@@ -13,10 +13,8 @@ import SigninPopup from '../SigninPopup/SigninPopup';
 import SignupPopup from '../SignupPopup/SignupPopup';
 import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-// import { newsApi } from '../../utils/NewsApi';
 import * as auth from '../../utils/NewsExplorerAuth';
 import * as mainApi from '../../utils/MainApi';
-
 
 function App() {
   const [somePopupIsOpened, setSomePopupIsOpened] = useState(false);
@@ -29,9 +27,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [savedNews, setSavedNews] = useState([]);
-  // const [foundNews, setFoundNews] = useState([]);
 
   const location = useLocation();
+  const history = useHistory();
 
   function tokenCheck() {
     if (localStorage.getItem('jwt')) {
@@ -48,13 +46,6 @@ function App() {
       }
     }
   }
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('searched-items')) {
-  //     const storageData = JSON.parse(localStorage.getItem('searched-items'));
-  //     setFoundNews(storageData);
-  //   }
-  // }, []);
 
   useEffect(() => {
     tokenCheck();
@@ -80,22 +71,6 @@ function App() {
       setThemeLight(false);
     }
   }, [location.pathname]);
-
-  // const handleNewsSearch = (queryString) => {
-  //   return newsApi(queryString)
-  //     .then((res) => {
-  //       if (res.articles.length === 0) {
-  //         localStorage.removeItem('searched-items');
-  //         setFoundNews([]);
-  //       } else {
-  //         localStorage.setItem('searched-items', JSON.stringify(res.articles));
-  //         localStorage.setItem('keyword', queryString);
-  //         const storageData = JSON.parse(localStorage.getItem('searched-items'));
-  //         setFoundNews(storageData);
-  //         // setCardsQuantity(3);
-  //       }
-  //     });
-  // };
 
   const handleHamburgerClick = () => {
     setNavigationIsExpanded(!navigationIsExpanded);
@@ -138,7 +113,6 @@ function App() {
     }
     setSomePopupIsOpened(true);
     setConfirmationPopupIsOpened(true);
-
   }
 
   const closeAllPopups = () => {
@@ -177,11 +151,8 @@ function App() {
     localStorage.removeItem('jwt');
     setCurrentUser({});
     setLoggedIn(false);
+    history.push('/');
   }
-
-  // function checkNewsIsSaved(someNews) {
-  //   return savedNews.some((news) => news.link === someNews.link);
-  // }
 
   function handleNewsSave(newsCard) {
     const jwt = localStorage.getItem('jwt');
@@ -203,23 +174,14 @@ function App() {
         setSavedNews(userNewsUpdated);
       });
   }
-  // function handleAuthError(err = { message: 'Что-то пошло не так. Попробуйте еще раз.' }) {
-  //   setTooltipText(err.message);
-  //   setTooltipImage(failIcon);
-  //   setIsInfoTooltipPopupOpen(true);
-  // }
-
-  // function handleAuthSuccess() {
-  //   setTooltipText('Вы успешно зарегистрировались.');
-  //   setTooltipImage(successIcon);
-  //   setIsInfoTooltipPopupOpen(true);
-  // }
 
   function redirectToSignin() {
-    setSigninPopupisOpened(true);
+    tokenCheck();
+    if (!loggedIn) {
+      setSigninPopupisOpened(true);
+    }
     return <Redirect to='/' />;
   }
-
 
   const pageClassName = `page ${(somePopupIsOpened || navigationIsExpanded) && 'page_fixed'}`;
 
@@ -260,7 +222,6 @@ function App() {
           />
         </Switch>
 
-
         <SigninPopup
           isOpen={signinPopupIsOpened}
           title="Вход"
@@ -294,12 +255,6 @@ function App() {
           onClose={closeAllPopups}
           themeLight={themeLight}
         />
-
-
-
-        {/* <Route path='/saved-news'>
-          <SavedNews newsCards={savedNews} />
-        </Route> */}
 
         <Footer />
       </div>

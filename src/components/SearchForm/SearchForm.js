@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { newsApi } from '../../utils/NewsApi';
 import './SearchForm.css';
 
 const SearchForm = ({ handleNewsSearch }) => {

@@ -17,9 +17,13 @@ const ConfirmationPopup = ({
   }
 
   useEffect(() => {
-    isOpen && document.addEventListener('keydown', onEscPress);
+    if (isOpen) {
+      document.addEventListener('keydown', onEscPress);
+    }
     return (() => {
-      isOpen && document.removeEventListener('keydown', onEscPress);
+      if (isOpen) {
+        document.removeEventListener('keydown', onEscPress);
+      }
     });
   }, [isOpen, onEscPress]);
 

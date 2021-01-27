@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://api.nkvasov.students.nomoreparties.space';
-// export const BASE_URL = 'http://localhost:3000';
+import { NKVASOV_API_BASE_URL } from './Configs';
+
 
 const handleOriginalResponse = (res) => {
   if (res.ok) {
@@ -9,7 +9,7 @@ const handleOriginalResponse = (res) => {
     .then((err) => Promise.reject(err));
 };
 
-export const register = (password, email, name) => fetch(`${BASE_URL}/signup`, {
+export const register = (password, email, name) => fetch(`${NKVASOV_API_BASE_URL}/signup`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ password, email, name }),
@@ -17,7 +17,7 @@ export const register = (password, email, name) => fetch(`${BASE_URL}/signup`, {
   .then(handleOriginalResponse)
   .then((res) => res);
 
-export const authorize = (password, email) => fetch(`${BASE_URL}/signin`, {
+export const authorize = (password, email) => fetch(`${NKVASOV_API_BASE_URL}/signin`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const authorize = (password, email) => fetch(`${BASE_URL}/signin`, {
     return data;
   });
 
-export const getContent = (token) => fetch(`${BASE_URL}/users/me`, {
+export const getContent = (token) => fetch(`${NKVASOV_API_BASE_URL}/users/me`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
