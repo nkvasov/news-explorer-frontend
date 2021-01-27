@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
 const SigninPopup = ({
@@ -13,34 +13,52 @@ const SigninPopup = ({
   handleLogin
 }) => {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // const history = useHistory();
+  const [inputValues, setInputValues] = useState({});
+  const [inputErrors, setInputErrors] = useState({});
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [submitError, setSubmitError] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmailInputChange = (e) => {
-    setEmail(e.target.value);
+  const resetForm = () => {
+    setInputValues({ email: '', password: '' });
+    setInputErrors({});
+    setFormIsValid(false);
+    setSubmitError({});
   };
 
-  const handlePasswordInputChange = (e) => {
-    setPassword(e.target.value);
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handleEscPress = (e) => {
+    if (onEscPress(e)) {
+      resetForm();
+    }
+
+  };
+
+  const handleChange = (e) => {
+    setSubmitError({});
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setInputValues({ ...inputValues, [name]: value });
+    setInputErrors({ ...inputErrors, [name]: target.validationMessage });
+    setFormIsValid(target.closest("form").checkValidity());
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!password || !email) {
-      // handleError();
-      return;
-    }
-    handleLogin(password, email)
+    setIsLoading(true);
+    handleLogin(inputValues.password, inputValues.email)
       .then(() => {
-        setEmail('');
-        setPassword('');
-        onClose();
-        // history.push('/');
+        handleClose();
       })
       .catch((err) => {
-        // handleError(err);
-      });
+        setSubmitError(err);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -50,43 +68,43 @@ const SigninPopup = ({
       submitBtnText={submitBtnText}
       alternativeLinkText={alternativeLinkText}
       onAlternativeLinkClick={onAlternativeLinkClick}
-      onClose={onClose}
-      onEscPress={onEscPress}
+      onClose={handleClose}
+      onEscPress={handleEscPress}
       themeLight={themeLight}
       onSubmit={handleSubmit}
+      formIsValid={formIsValid}
+      isLoading={isLoading}
     >
       <div className="popup__field">
         <label className="popup__input-title">Email</label>
         <input className="popup__input"
-          id="email"
           type="email"
           name="email"
           placeholder="Введите почту"
           required
           minLength="3"
           maxLength="40"
-          value={email}
-          onChange={handleEmailInputChange}
+          value={inputValues.email}
+          onChange={handleChange}
         />
-        <span className="popup__input-error popup__input-error_active">ошибка</span>
+        <span className="popup__input-error popup__input-error_active">{inputErrors.email}</span>
 
       </div>
       <div className="popup__field">
         <label className="popup__input-title">Пароль</label>
         <input className="popup__input"
-          id="password"
           type="password"
           name="password"
           placeholder="Введите пароль"
           required
           minLength="5"
           maxLength="20"
-          value={password}
-          onChange={handlePasswordInputChange}
+          value={inputValues.password}
+          onChange={handleChange}
         />
-        <span className="popup__input-error popup__input-error_active">ошибка</span>
-        <span className="popup__form-error popup__form-error_active">ошибка</span>
+        <span className="popup__input-error popup__input-error_active">{inputErrors.password}</span>
       </div>
+      <span className="popup__form-error popup__form-error_active">{submitError.message}</span>
     </PopupWithForm>
   );
 };

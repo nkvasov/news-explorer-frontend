@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, useLocation, Switch } from 'react-router-dom';
+import { Route, useLocation, Switch, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import './App.css';
@@ -156,6 +156,7 @@ function App() {
   const handleEscPress = (e) => {
     if (e.key === 'Escape') {
       closeAllPopups();
+      return true;
     }
   };
 
@@ -214,7 +215,10 @@ function App() {
   //   setIsInfoTooltipPopupOpen(true);
   // }
 
-
+  function redirectToSignin() {
+    setSigninPopupisOpened(true);
+    return <Redirect to='/' />;
+  }
 
 
   const pageClassName = `page ${(somePopupIsOpened || navigationIsExpanded) && 'page_fixed'}`;
@@ -242,16 +246,16 @@ function App() {
             <Main
               handleNewsSave={handleNewsSave}
               handleNewsDelete={handleNewsDelete}
-              // checkNewsIsSaved={checkNewsIsSaved}
               savedNews={savedNews}
               loggedIn={loggedIn}
             />
           </Route>
           <ProtectedRoute
             exact path='/saved-news'
-            loggedIn={loggedIn}
+            onRedirect={redirectToSignin}
             component={SavedNews}
             newsCards={savedNews}
+            loggedIn={loggedIn}
             handleNewsDelete={handleNewsDelete}
           />
         </Switch>
