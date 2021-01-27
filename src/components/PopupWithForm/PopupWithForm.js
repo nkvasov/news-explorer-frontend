@@ -12,10 +12,12 @@ const PopupWithForm = ({
   onClose,
   onSubmit,
   themeLight,
+  formIsValid,
   children,
 }) => {
   const popupClassName = `popup ${isOpen && 'popup_opened'}`;
   const closeBtnClassName = `popup__close-btn ${themeLight && 'popup__close-btn_theme_light'}`;
+  const submitBtnClass = `btn btn_type_submit popup__submit-btn ${!formIsValid && 'popup__submit-btn_disabled'}`
 
   const alternativeLinkClickHandler = () => {
     onClose();
@@ -28,6 +30,7 @@ const PopupWithForm = ({
       isOpen && document.removeEventListener('keydown', onEscPress);
     });
   }, [isOpen, onEscPress]);
+
 
   return (
     <section className={popupClassName} onClick={onClose} >
@@ -49,7 +52,7 @@ const PopupWithForm = ({
 
         {children}
 
-        <button className="btn btn_type_submit popup__submit-btn" type="submit">
+        <button className={submitBtnClass} type="submit">
           {submitBtnText}
         </button>
 

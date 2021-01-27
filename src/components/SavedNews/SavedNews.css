@@ -1,6 +1,13 @@
+.saved-content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 250px);
+}
+
 .saved-news {
   background-color: #F5F6F7;
   padding: 62px 104px;
+  flex-grow: 2;
 }
 
 @media screen and (max-width: 1150px) {

@@ -4,7 +4,6 @@ import './Header.css';
 import logo from '../../images/NewsExplorerLogo-white.svg';
 import logoBlack from '../../images/NewsExplorerLogo-black.svg';
 
-
 const Header = ({ navigationIsExpanded, children, themeLight }) => {
 
   const className = `header ${navigationIsExpanded && 'header_nav-expanded'} ${themeLight && 'header_theme_light'}`;

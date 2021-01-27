@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import logoutBlack from '../../images/icons/logout-black.svg';
 import logoutWhite from '../../images/icons/logout-white.svg';
 
 
-const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight }) => {
 
+const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight, onExitClick }) => {
+
+  const currentUser = useContext(CurrentUserContext);
 
   const navClassName = `nav ${expanded && 'nav_expanded'}`;
 
@@ -14,9 +17,8 @@ const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight }) => 
 
   const authBtnClassname = `nav__btn ${themeLight && 'nav__btn_theme_light'}`;
 
-  // Кнопка выхода пока скрыта незаконно)))
-  const exitBtnClassname = `nav__btn ${true && 'nav__btn_hidden'} ${themeLight && 'nav__btn_theme_light'}` 
-  
+  const exitBtnClassname = `nav__btn ${themeLight && 'nav__btn_theme_light'}`
+
   const logoutImagePath = (themeLight) ? logoutBlack : logoutWhite;
 
   return (
@@ -33,31 +35,39 @@ const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight }) => 
               Главная
           </NavLink>
           </li>
-          <li className="nav__link-container">
-            <NavLink
-              to="/saved-news"
-              className={linkClassName}
-              activeClassName="nav__link_active"
-              onClick={onMenuClick}
-            >
-              Сохраненные статьи
-          </NavLink>
-          </li>
-        </ul>
-        <button
-          className={authBtnClassname}
-          onClick={onSigninBtnClick}
-        >
-          Авторизоваться
-        </button>
 
-        <button
-          className={exitBtnClassname}
-          // onClick={onSigninBtnClick}
-        >
-          Семён
-          <img className="nav__btn-image" src={logoutImagePath} alt="Выйти"/>
-        </button>
+          {currentUser._id && (
+            <li className="nav__link-container">
+              <NavLink
+                to="/saved-news"
+                className={linkClassName}
+                activeClassName="nav__link_active"
+                onClick={onMenuClick}
+              >
+                Сохраненные статьи
+          </NavLink>
+            </li>
+          )}
+
+        </ul>
+
+        {!currentUser._id && (
+          <button className={authBtnClassname} onClick={onSigninBtnClick}>
+            Авторизоваться
+          </button>
+        )}
+
+        {currentUser._id && (
+          <button
+            className={exitBtnClassname}
+            onClick={onExitClick}
+          >
+            {currentUser.name}
+            <img className="nav__btn-image" src={logoutImagePath} alt="Выйти" />
+          </button>
+        )}
+
+
 
       </div>
     </nav>

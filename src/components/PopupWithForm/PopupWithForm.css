@@ -28,6 +28,8 @@
 }
 
 .popup__container {
+  display: flex;
+  flex-direction: column;
   position: relative;
   box-sizing: border-box;
   margin: 0 auto;
@@ -92,6 +94,7 @@
 .popup__submit-btn {
   width: 100%;
   margin-bottom: 16px;
+  margin-top: 10px;
   box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
 }
 
@@ -132,36 +135,26 @@
   line-height: 15px;
   color: #ff0000;
   transition: 0.3s;
-  opacity: 0;
-}
-
-.popup__input-error_active {
-  opacity: 1;
 }
 
 .popup__form-error {
-  text-align: center;
+  align-self: center;
+  /* text-align: center; */
   font-size: 12px;
   line-height: 15px;
   color: #ff0000;
   transition: 0.3s;
-  opacity: 0;
-  margin-top: 8px;
-}
-
-.popup__form-error_active {
-  opacity: 1;
 }
 
 .popup__field {
   display: flex;
   flex-direction: column;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .popup__field:last-of-type {
-  min-height: 90px;
-  margin-bottom: 4px;
+  min-height: 80px;
+  /* margin-bottom: 4px; */
 }
 
 .popup__alt-submit-text {

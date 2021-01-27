@@ -42,7 +42,6 @@ function App() {
             if (res) {
               setLoggedIn(true);
               setCurrentUser(res);
-              // history.push('/');
             }
           })
           .catch((err) => console.log(err));
@@ -235,6 +234,7 @@ function App() {
             onSigninBtnClick={handleSigninClick}
             onMenuClick={handleNavigationClick}
             themeLight={themeLight}
+            onExitClick={signOut}
           />
         </Header>
         <Switch>

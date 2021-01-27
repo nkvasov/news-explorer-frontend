@@ -7,23 +7,30 @@ import './SavedNews.css';
 const SavedNews = ({ newsCards, handleNewsDelete }) => {
   const currentUser = useContext(CurrentUserContext);
 
-  const keywordsRaiting = newsCards.reduce(function (newArr, card) {
-    const index = newArr.findIndex((item) => item.keyword.toLowerCase() === card.keyword.toLowerCase());
-    if (index === -1) {
-      newArr.push({ keyword: card.keyword, quantity: 1 });
-      console.log('push');
-      return newArr;
-    } else {
-      newArr[index].quantity += 1;
-      console.log(newArr);
-      return newArr;
-    }
-  }, []);
+  function getKeywordsRaiting() {
+    return newsCards.reduce(function (newArr, card) {
+      const index = newArr.findIndex((item) => item.keyword.toLowerCase() === card.keyword.toLowerCase());
+      if (index === -1) {
+        newArr.push({ keyword: card.keyword, quantity: 1 });
+        return newArr;
+      } else {
+        newArr[index].quantity += 1;
+        return newArr;
+      }
+    }, []);
+  }
+  let keywordsRaiting;
 
-  keywordsRaiting.sort((a, b) => - a.quantity + b.quantity);
+  if (newsCards.length === 0) {
+    keywordsRaiting = null;
+  } else {
+    keywordsRaiting = getKeywordsRaiting();
+    keywordsRaiting.sort((a, b) => - a.quantity + b.quantity);
+  }
+
 
   return (
-    <main>
+    <main className="saved-content">
       <SavedNewsHeader
         name={currentUser.name}
         cardsQuantity={newsCards.length}

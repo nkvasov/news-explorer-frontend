@@ -35,6 +35,7 @@ const SigninPopup = ({
       .then(() => {
         setEmail('');
         setPassword('');
+        onClose();
         // history.push('/');
       })
       .catch((err) => {

@@ -14,35 +14,35 @@ const SignupPopup = ({
   handleRegistrationSuccess
 }) => {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [inputValues, setInputValues] = useState({});
+  const [inputErrors, setInputErrors] = useState({});
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [submitError, setSubmitError] = useState({});
+
   let authError;
-  // const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!password || !email) {
-    //   // handleError();
-    //   return;
-    // }
-    handleRegistration(password, email, name)
+    handleRegistration(inputValues.password, inputValues.email, inputValues.name)
       .then((res) => {
-        console.log(res);
         if (res) {
           onClose();
           handleRegistrationSuccess();
-          // history.push('/sign-in');
-          // handleSuccess();
         }
       })
       .catch((err) => {
-        authError = err.message;
-        console.log(err.message);
-        // handleError(err);
+        setSubmitError(err);
       });
   };
 
+  const handleChange = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setInputValues({...inputValues, [name]: value});
+    setInputErrors({...inputErrors, [name]: target.validationMessage });
+    setFormIsValid(target.closest("form").checkValidity());
+  };
 
   return (
     <PopupWithForm
@@ -55,54 +55,57 @@ const SignupPopup = ({
       onEscPress={onEscPress}
       themeLight={themeLight}
       onSubmit={handleSubmit}
+      formIsValid={formIsValid}
     >
       <div className="popup__field">
+
         <label className="popup__input-title">Email</label>
         <input className="popup__input"
           // id="email"
           type="email"
-          // name="email"
+          name="email"
           placeholder="Введите почту"
           required
           minLength="3"
           maxLength="40"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={inputValues.email}
+          onChange={handleChange}
         />
-        <span className="popup__input-error popup__input-error_active">ошибка</span>
+        <span className="popup__input-error">{inputErrors.email}</span>
       </div>
-
       <div className="popup__field">
+
         <label className="popup__input-title">Пароль</label>
         <input className="popup__input"
           // id="password"
           type="password"
-          // name="password"
+          name="password"
           placeholder="Введите пароль"
           required
           minLength="5"
           maxLength="20"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={inputValues.password}
+          onChange={handleChange}
         />
-        <span className="popup__input-error popup__input-error_active">ошибка</span>
+        <span className="popup__input-error">{inputErrors.password}</span>
       </div>
       <div className="popup__field">
+        
         <label className="popup__input-title">Имя</label>
         <input className="popup__input"
           // id="name"
           type="text"
-          // name="name"
+          name="name"
           placeholder="Введите своё имя"
           required
           minLength="2"
           maxLength="15"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={inputValues.name}
+          onChange={handleChange}
         />
-        <span className="popup__input-error popup__input-error_active">ошибка</span>
-        <span className="popup__form-error popup__form-error_active">{authError}</span>
+        <span className="popup__input-error">{inputErrors.name}</span>
       </div>
+        <span className="popup__form-error">{submitError.message}</span>
     </PopupWithForm>
   );
 };
