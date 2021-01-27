@@ -13,7 +13,7 @@ const SigninPopup = ({
   handleLogin
 }) => {
 
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({ email: '', password: '' });
   const [inputErrors, setInputErrors] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
   const [submitError, setSubmitError] = useState({});

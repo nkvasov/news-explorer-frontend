@@ -25,7 +25,6 @@ const NewsCard = ({
 
   useEffect(() => {
     if (loggedIn) {
-      console.log('fire');
       checkNewsIsSaved(newsCard);
     }
   }, [loggedIn, savedNews]);

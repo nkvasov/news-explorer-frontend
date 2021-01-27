@@ -14,7 +14,7 @@ const SignupPopup = ({
   handleRegistrationSuccess
 }) => {
 
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState({ email: '', password: '', name: '' });
   const [inputErrors, setInputErrors] = useState({});
   const [formIsValid, setFormIsValid] = useState(false);
   const [submitError, setSubmitError] = useState({});
