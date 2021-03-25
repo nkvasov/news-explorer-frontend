@@ -27,7 +27,7 @@ const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight, onExi
         <ul className="nav__links">
           <li className="nav__link-container">
             <NavLink
-              exact to="/"
+              exact to="/news-explorer-frontend"
               className={linkClassName}
               activeClassName="nav__link_active"
               onClick={onMenuClick}
@@ -39,7 +39,7 @@ const Navigation = ({ onSigninBtnClick, expanded, onMenuClick, themeLight, onExi
           {currentUser._id && (
             <li className="nav__link-container">
               <NavLink
-                to="/saved-news"
+                to="/news-explorer-frontend/saved-news"
                 className={linkClassName}
                 activeClassName="nav__link_active"
                 onClick={onMenuClick}

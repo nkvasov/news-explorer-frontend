@@ -65,7 +65,7 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (location.pathname === '/saved-news') {
+    if (location.pathname === '/news-explorer-frontend/saved-news') {
       setThemeLight(true);
     } else {
       setThemeLight(false);
@@ -151,7 +151,7 @@ function App() {
     localStorage.removeItem('jwt');
     setCurrentUser({});
     setLoggedIn(false);
-    history.push('/');
+    history.push('/news-explorer-frontend');
   }
 
   function handleNewsSave(newsCard) {
@@ -180,7 +180,7 @@ function App() {
     if (!loggedIn) {
       setSigninPopupisOpened(true);
     }
-    return <Redirect to='/' />;
+    return <Redirect to='/news-explorer-frontend' />;
   }
 
   const pageClassName = `page ${(somePopupIsOpened || navigationIsExpanded) && 'page_fixed'}`;
@@ -204,7 +204,7 @@ function App() {
           />
         </Header>
         <Switch>
-          <Route exact path='/'>
+          <Route exact path='/news-explorer-frontend'>
             <Main
               handleNewsSave={handleNewsSave}
               handleNewsDelete={handleNewsDelete}
@@ -213,7 +213,7 @@ function App() {
             />
           </Route>
           <ProtectedRoute
-            exact path='/saved-news'
+            exact path='/news-explorer-frontend/saved-news'
             onRedirect={redirectToSignin}
             component={SavedNews}
             newsCards={savedNews}

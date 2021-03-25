@@ -12,7 +12,7 @@ const Header = ({ navigationIsExpanded, children, themeLight }) => {
 
   return (
     <header className={className}>
-      <Link to="/" className="header__logo-container">
+      <Link to="/news-explorer-frontend" className="header__logo-container">
         <img src={logoPath} className="header__logo" alt="Логотип News Explorer" />
       </Link>
 
