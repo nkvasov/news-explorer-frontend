@@ -4,7 +4,7 @@
 News Explorer – одностраничное приложение для поиска новостей по ключевому слову с помощью News API. В приложении реализован функционал для регистрации и авторизации пользователя. Включена возможность сохранения новостей в "Избранное". Проект включает в себя фронтенд- и бэкенд-части.
 
 ## Проект развернут по адресу:
-[https://www.news-explorer.nkvasov.ru/](www.news-explorer.nkvasov.ru/)
+[www.news-explorer.nkvasov.ru/](https://www.news-explorer.nkvasov.ru/)
 
 ## Репозиторий бэкенд-части
 [https://github.com/nkvasov/news-explorer-api](https://github.com/nkvasov/news-explorer-api)
