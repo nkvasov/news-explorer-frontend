@@ -4,7 +4,7 @@ import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import './SavedNews.css';
 
-const SavedNews = ({ newsCards, handleNewsDelete }) => {
+const SavedNews = ({ newsCards, handleNewsDelete, savedNews, loggedIn }) => {
   const currentUser = useContext(CurrentUserContext);
 
   function getKeywordsRaiting() {
@@ -39,7 +39,9 @@ const SavedNews = ({ newsCards, handleNewsDelete }) => {
       <section className="saved-news">
         <NewsCardList
           newsCards={newsCards}
+          savedNews={savedNews}
           handleNewsDelete={handleNewsDelete}
+          loggedIn={loggedIn}
         />
       </section>
     </main>

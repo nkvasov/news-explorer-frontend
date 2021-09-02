@@ -12,7 +12,7 @@ const Footer = () => {
       <nav className="footer__nav">
         <ul className="footer__text-links">
           <li className="footer__text-link-container">
-            <Link to="/news-explorer-frontend" className="footer__text-link">
+            <Link to="/" className="footer__text-link">
               Главная
           </Link>
           </li>

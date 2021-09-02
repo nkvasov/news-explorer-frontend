@@ -1,5 +1,5 @@
 {
-  "name": "news-explorer-frontend",
+  "name": "news-explorer-front",
   "version": "0.1.0",
   "private": true,
   "author": "nikolay kvasov <nkvasov@yandex.ru>",
@@ -22,10 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && scp -r ./build/* nkvasov@217.25.93.59:/home/nkvasov/news-explorer/news-explorer-frontend"
   },
-  "homepage": "https://nkvasov.github.io/news-explorer-frontend/",
   "eslintConfig": {
     "extends": [
       "react-app",

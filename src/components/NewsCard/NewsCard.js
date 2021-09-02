@@ -26,6 +26,8 @@ const NewsCard = ({
   useEffect(() => {
     if (loggedIn) {
       checkNewsIsSaved(newsCard);
+    } else {
+      setIsSaved(false);
     }
   }, [loggedIn, savedNews]);
 

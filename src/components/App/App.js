@@ -65,7 +65,7 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (location.pathname === '/news-explorer-frontend/saved-news') {
+    if (location.pathname === '/saved-news') {
       setThemeLight(true);
     } else {
       setThemeLight(false);
@@ -123,7 +123,6 @@ function App() {
     } else if (confirmationPopupIsOpened) {
       setConfirmationPopupIsOpened(false);
     }
-
     setSomePopupIsOpened(false);
   };
 
@@ -151,7 +150,8 @@ function App() {
     localStorage.removeItem('jwt');
     setCurrentUser({});
     setLoggedIn(false);
-    history.push('/news-explorer-frontend');
+    setSavedNews([]);
+    history.push('/');
   }
 
   function handleNewsSave(newsCard) {
@@ -180,7 +180,7 @@ function App() {
     if (!loggedIn) {
       setSigninPopupisOpened(true);
     }
-    return <Redirect to='/news-explorer-frontend' />;
+    return <Redirect to='/' />;
   }
 
   const pageClassName = `page ${(somePopupIsOpened || navigationIsExpanded) && 'page_fixed'}`;
@@ -204,7 +204,7 @@ function App() {
           />
         </Header>
         <Switch>
-          <Route exact path='/news-explorer-frontend'>
+          <Route exact path='/'>
             <Main
               handleNewsSave={handleNewsSave}
               handleNewsDelete={handleNewsDelete}
@@ -213,10 +213,11 @@ function App() {
             />
           </Route>
           <ProtectedRoute
-            exact path='/news-explorer-frontend/saved-news'
+            exact path='/saved-news'
             onRedirect={redirectToSignin}
             component={SavedNews}
             newsCards={savedNews}
+            savedNews={savedNews}
             loggedIn={loggedIn}
             handleNewsDelete={handleNewsDelete}
           />
@@ -255,7 +256,6 @@ function App() {
           onClose={closeAllPopups}
           themeLight={themeLight}
         />
-
         <Footer />
       </div>
     </CurrentUserContext.Provider>
